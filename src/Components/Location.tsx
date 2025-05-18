@@ -125,14 +125,8 @@ function Location() {
 
       {countryName && stateName && cityName && (
         <Grid mt={2}>
-          <Typography variant="h6" component="span">
-            You Selected{" "}
-            <Typography variant="h5" component="span">
-              {cityName},{" "}
-            </Typography>
-            <Typography variant="h6" component="span" sx={{ color: "grey" }}>
-              {stateName}, {countryName}
-            </Typography>
+          <Typography variant="h6">
+            You selected {cityName}, {stateName}, {countryName}
           </Typography>
         </Grid>
       )}
