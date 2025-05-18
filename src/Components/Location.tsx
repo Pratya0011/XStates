@@ -70,7 +70,9 @@ function Location() {
               }
               if (reason === "clear") {
                 setStateName("");
+                setCityName("");
                 setStates([]);
+                setCities([]);
               }
             }}
             renderInput={(params) => <TextField {...params} label="Country" />}
