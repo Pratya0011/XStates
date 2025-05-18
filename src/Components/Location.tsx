@@ -82,6 +82,7 @@ function Location() {
           <Autocomplete
             options={states}
             value={stateName}
+            disabled={!countryName}
             onChange={(event: any, value: any) => {
               setStateName(value);
             }}
@@ -101,6 +102,7 @@ function Location() {
           <Autocomplete
             options={cities}
             value={cityName}
+            disabled={!countryName && !stateName}
             onChange={(event: any, value: any) => {
               setCityName(value);
             }}
