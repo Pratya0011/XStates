@@ -128,10 +128,10 @@ function Location() {
           <Typography variant="h6" component="span">
             You Selected{" "}
             <Typography variant="h5" component="span">
-              {countryName},{" "}
+              {cityName},{" "}
             </Typography>
             <Typography variant="h6" component="span" sx={{ color: "grey" }}>
-              {stateName}, {cityName}
+              {stateName}, {countryName}
             </Typography>
           </Typography>
         </Grid>
