@@ -1,4 +1,4 @@
-import { Autocomplete, Grid, TextField, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -48,6 +48,14 @@ function Location() {
       console.error(err);
     }
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCountry = e.target.value;
+    setCountryName(selectedCountry);
+    if (selectedCountry) {
+      getState(selectedCountry);
+    }
+  };
   return (
     <Grid>
       <Typography variant="h4">Select Location</Typography>
@@ -58,58 +66,63 @@ function Location() {
         sx={{ display: "flex", justifyContent: "center" }}
       >
         <Grid size={6}>
-          <Autocomplete
-            options={countries}
+          <label htmlFor="country-select">Country:</label>
+          <select
+            id="country-select"
             value={countryName}
-            onChange={(event: any, value: any) => {
-              setCountryName(value);
-            }}
-            onInputChange={(event, value, reason) => {
-              if (reason === "selectOption") {
-                getState(value);
-              }
-              if (reason === "clear") {
-                setStateName("");
-                setCityName("");
-                setStates([]);
-                setCities([]);
-              }
-            }}
-            renderInput={(params) => <TextField {...params} label="Country" />}
-          />
+            onChange={handleChange}
+            style={{ height: 30 }}
+          >
+            <option value="">Select a country</option>
+            {countries.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
         </Grid>
+
         <Grid size={2}>
-          <Autocomplete
-            options={states}
+          <label htmlFor="state-select">State:</label>
+          <select
+            id="state-select"
             value={stateName}
-            disabled={!countryName}
-            onChange={(event: any, value: any) => {
+            onChange={(e) => {
+              const value = e.target.value;
               setStateName(value);
+              getCity(value);
             }}
-            onInputChange={(event, value, reason) => {
-              if (reason === "selectOption") {
-                getCity(value);
-              }
-              if (reason === "clear") {
-                setCityName("");
-                setCities([]);
-              }
-            }}
-            renderInput={(params) => <TextField {...params} label="State" />}
-          />
+            disabled={!countryName}
+            style={{ height: 30 }}
+          >
+            <option value="">Select a state</option>
+            {states.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
         </Grid>
+
         <Grid size={2}>
-          <Autocomplete
-            options={cities}
+          <label htmlFor="city-select">City:</label>
+          <select
+            id="city-select"
             value={cityName}
-            disabled={!countryName && !stateName}
-            onChange={(event: any, value: any) => {
-              setCityName(value);
-            }}
-            renderInput={(params) => <TextField {...params} label="City" />}
-          />
+            onChange={(e) => setCityName(e.target.value)}
+            disabled={!countryName || !stateName}
+            style={{ height: 30 }}
+          >
+            <option value="">Select a city</option>
+            {cities.map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
         </Grid>
       </Grid>
+
       {countryName && stateName && cityName && (
         <Grid mt={2}>
           <Typography variant="h6" component="span">
